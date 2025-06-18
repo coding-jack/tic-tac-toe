@@ -12,6 +12,9 @@ function getMoveLocation(prevSquares, nextSquares) {
 
 
 export default function Game() {
+  // Header and subheader
+  // Wrap main content for styling
+
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [moveLocations, setMoveLocations] = useState([]); // stores [row, col] for each move
   const [currentMove, setCurrentMove] = useState(0);
@@ -57,19 +60,33 @@ export default function Game() {
   const isDraw = !winnerInfo && currentSquares.every(Boolean);
 
   return (
-    <div className="game">
-      <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} winnerInfo={winnerInfo} />
-      </div>
-      <div className="game-info">
-        <button onClick={() => setIsAscending(!isAscending)}>
-          Sort: {isAscending ? 'Ascending' : 'Descending'}
-        </button>
-        <ol>{sortedMoves}</ol>
-        {isDraw && <div className="draw-message">The game is a draw!</div>}
+    <div className="app-container">
+      <header className="main-header">
+        <h1 className="title">Tic + Tac + Toe</h1>
+        <h2 className="sub-header">🪲 + 🪡 + 🦶</h2>
+      </header>
+      <div className="game-layout">
+        <div className="game">
+          <div className="status-container">
+            <div className="status-text">
+              {/* status is handled by Board */}
+            </div>
+          </div>
+          <div className="game-board">
+            <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} winnerInfo={winnerInfo} />
+          </div>
+        </div>
+        <div className="game-info">
+          <button className="sort-btn" onClick={() => setIsAscending(!isAscending)}>
+            Sort: {isAscending ? 'Ascending' : 'Descending'}
+          </button>
+          <ol className="move-list">{sortedMoves}</ol>
+          {isDraw && <div className="draw-message">The game is a draw!</div>}
+        </div>
       </div>
     </div>
   );
+
 }
 
 function Board({ xIsNext, squares, onPlay, winnerInfo }) {
